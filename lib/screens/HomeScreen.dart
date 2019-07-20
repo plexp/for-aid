@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:probable_pancake/utils/components.dart';
+
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
   _HomeScreenState createState() => _HomeScreenState();
@@ -13,10 +15,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    CustomComponents cmp = new CustomComponents(context);
     return Scaffold(
         appBar: AppBar(
           title: Text('Home Screen'),
         ),
+        drawer: cmp.getDrawer(),
         body: ListView(
           padding: const EdgeInsets.all(8.0),
           children: <Widget>[
@@ -29,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Theme.of(context).primaryColor,
                             textColor: Colors.white,
                             onPressed: () {
-                              Navigator.pushNamed(context, '/debug'); //TODO create debug screen
+                              Navigator.pushNamed(context, '/debug');
                             }
                         )
                     )
