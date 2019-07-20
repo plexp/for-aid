@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'screens/HomeScreen.dart';
 import 'screens/DebugScreen.dart';
+import 'screens/AddPersonScreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,7 +17,9 @@ class MyApp extends StatelessWidget {
         routes: <String, WidgetBuilder> {
           '/' : (BuildContext context) => HomeScreen(),
 
-          '/debug' : (BuildContext context) => DebugScreen()
+          '/people/add' : (BuildContext context) => AddPersonScreen(),
+
+          '/debug' : (BuildContext context) => DebugScreen(),
         },
     );
   }
