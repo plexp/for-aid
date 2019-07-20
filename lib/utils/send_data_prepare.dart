@@ -37,8 +37,7 @@ class AddScan {
   }) : this.location = {"longitude" : longitude, "latitude" : latitude};
 
   sendRequest() async {
-    String targetUrl = "https://tst.plzni.to/api/1.0/tickets/new";
-    //String targetUrl = "http://hub-internal.techheaven.org/plznito/api/1.0/tickets/new";
+    String targetUrl = "?"; //TODO add url
     String json;
 
     if(this.id == null || this.id == "") {
