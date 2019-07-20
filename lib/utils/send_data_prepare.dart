@@ -16,6 +16,8 @@ Send it like
 */
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
+
 class AddScan {
   int id;
   String first_name;
@@ -24,47 +26,37 @@ class AddScan {
   double longitude;
   double latitude;
 
+  Map<String, double> location;
+
   AddScan({
       this.id,
       this.first_name,
       this.last_name,
       this.longitude,
       this.latitude,
-  });
+  }) : this.location = {"longitude" : longitude, "latitude" : latitude};
 
   sendRequest() async {
     String targetUrl = "https://tst.plzni.to/api/1.0/tickets/new";
     //String targetUrl = "http://hub-internal.techheaven.org/plznito/api/1.0/tickets/new";
     String json;
 
-    if(this.name == null || this.name == "") {
-      throw new Exception("Chybí název ticketu");
+    if(this.id == null || this.id == "") {
+      throw new Exception("Chybí ID");
     }
     if(this.longitude == null || this.latitude == null) {
       throw new Exception("Chybí poloha");
     }
-    if(this.category_id == null) {
-      throw new Exception("Chybí kategorie");
-    }
 
 
-    String description;
 
-    if(isTestVersion) {
-      description = this.description + "\n Odesláno pomocí testovací verze";
-    }
-    else {
-      description = this.description;
-    }
     Map prepareJson;
 
     prepareJson = {
-      'name' : this.name,
-      'category_id' : this.category_id,
-      'description' : description,
-      'longitude' : this.longitude.toString(),
-      'latitude' : this.latitude.toString(),
-      'photos' : this.photos,
+      'id' : this.id,
+      'first_name' : this.first_name,
+      'last_name' : this.last_name,
+      'location' : this.location,
     };
 
 
