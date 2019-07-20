@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:probable_pancake/utils/components.dart';
 
-import 'package:nfc/nfc.dart';
-
 class AddPersonScreen extends StatefulWidget {
   AddPersonScreen({Key key}) : super(key: key);
   _AddPersonScreenState createState() => _AddPersonScreenState();
@@ -35,7 +33,7 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
                 )
             ),
             FutureBuilder(
-              future: this.getNfcData(),
+              future: this.getData(),
               builder: (context, snapshot) {
                   if (snapshot.hasError) print(snapshot.error);
 
@@ -50,9 +48,9 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
     );
   }
 
-  Future<String> getNfcData() async {
+  Future<String> getData() async {
     String tagData;
-    tagData = await Nfc.readTag;
+    tagData = "test";
     return tagData;
   }
 }
