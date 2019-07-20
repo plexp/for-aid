@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:probable_pancake/utils/components.dart';
 
 class DebugScreen extends StatelessWidget {
-    CustomComponents cmp = new CustomComponents(context);
 
   @override
   Widget build(BuildContext context) {
+    CustomComponents cmp = new CustomComponents(context);
+    
     return Scaffold(
         appBar: AppBar(
           title: Text('Debug Screen'),
