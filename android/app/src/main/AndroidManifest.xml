@@ -13,6 +13,11 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="probable_pancake"
         android:icon="@mipmap/ic_launcher">
+
+        <!-- Google Maps require this -->
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAIQUgMuH3Z4FZIv1hfOuKap1EjnN6xXNg"/>
+        <!-- Google Maps end -->
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

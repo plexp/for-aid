@@ -72,6 +72,21 @@ class DebugScreen extends StatelessWidget {
                     )
                 )
             ),
+            Container(
+                height: 80,
+                child: Center(
+                    child: Container(
+                      child: RaisedButton(
+                          child: Text('Go to Map Screen'),
+                          color: Theme.of(context).primaryColor,
+                          textColor: Colors.white,
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/people/map');
+                          }
+                      ),
+                    )
+                )
+            ),
           ],
         )
     );
