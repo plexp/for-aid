@@ -37,7 +37,7 @@ class AddScan {
   }) : this.location = {"longitude" : longitude, "latitude" : latitude};
 
   sendRequest() async {
-    String targetUrl = "?"; //TODO add url
+    String targetUrl = "192.168.1.138:8000"; //TODO add url
     String json;
 
     if(this.id == null) {
@@ -82,8 +82,8 @@ class AddScan {
   Future<List<AddScan>> getPeople() async {
     List people = [];
     //TODO get list of people from external source
-    people.add(new AddScan(id: 1, first_name: "John", last_name: "Doe", latitude: 40.4468825758702, longitude: -3.694507890552619));
-    people.add(new AddScan(id: 2, first_name: "Jack", last_name: "Black", latitude: 40.4525758702, longitude: -3.694890552619));
+    people.add(new AddScan(id: 1, first_name: "John", last_name: "Doe", latitude: 40.446882, longitude: -3.694507));
+    people.add(new AddScan(id: 2, first_name: "Jack", last_name: "Black", latitude: 40.452575, longitude: -3.694890));
     return people;
   }
 

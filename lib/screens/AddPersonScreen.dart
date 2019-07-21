@@ -6,10 +6,12 @@ import 'package:flutter/services.dart';
 import 'package:probable_pancake/utils/components.dart';
 
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'package:probable_pancake/utils/send_data_prepare.dart';
 
 class AddPersonScreen extends StatefulWidget {
+  final bool androidFusedLocation = false;
   AddPersonScreen({Key key}) : super(key: key);
   _AddPersonScreenState createState() => _AddPersonScreenState();
 }
@@ -17,6 +19,9 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
   final idInputController = TextEditingController();
   final firstNameInputController = TextEditingController();
   final lastNameInputController = TextEditingController();
+  Position _lastKnownPosition;
+  Position _currentPosition;
+
   String barcode;
 
   @override
@@ -30,6 +35,42 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
   @override
   void initState() {
     super.initState();
+    _initLastKnownLocation();
+    _initCurrentLocation();
+  }
+
+  Future<void> _initLastKnownLocation() async {
+    Position position;
+    try {
+      final Geolocator geolocator = Geolocator()
+        ..forceAndroidLocationManager = !widget.androidFusedLocation;
+      position = await geolocator.getLastKnownPosition(
+          desiredAccuracy: LocationAccuracy.best);
+    } on PlatformException {
+      position = null;
+    }
+
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      _lastKnownPosition = position;
+    });
+  }
+
+  _initCurrentLocation() {
+    Geolocator()
+      ..forceAndroidLocationManager = !widget.androidFusedLocation
+      ..getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best,
+      ).then((position) {
+        if (mounted) {
+          setState(() => _currentPosition = position);
+        }
+      }).catchError((e) {
+        //
+      });
   }
   @override
   Widget build(BuildContext context) {
@@ -45,13 +86,16 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
             int id = int.parse(idInputController.text);
             String firstName = firstNameInputController.text;
             String lastName = lastNameInputController.text;
-            double latitude = 0.0;
-            double longitude = 0.0;
+            double latitude = _currentPosition.latitude;
+            double longitude = _currentPosition.longitude;
             AddScan send = new AddScan(id: id, first_name: firstName, last_name: lastName, latitude: latitude, longitude: longitude);
             send.sendRequest();
+            idInputController.text = "";
+            firstNameInputController.text = "";
+            lastNameInputController.text = "";
           },
           tooltip: 'Add this person',
-          child: Icon(Icons.text_fields),
+          child: Icon(Icons.add),
         ),
         body: ListView(
           padding: const EdgeInsets.all(8.0),
@@ -102,7 +146,14 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
                                 ),
                                   controller: lastNameInputController,
                             )
+                          ),
+                          Center(
+                            child: Text("Latitude: " + _currentPosition.latitude.toString())
+                          ),
+                          Center(
+                            child: Text("Longitude: " + _currentPosition.longitude.toString()) 
                           )
+
                         ],)
                       ),
           ],

@@ -39,7 +39,7 @@ class _PersonDetailScreenState extends State<PersonDetailScreen> {
           onPressed: () {
             //TODO retrieve info
             int id = int.parse(idInputController.text);
-
+            
             Navigator.push(context, MaterialPageRoute(builder: (context) => PersonDetailScreen2(personId: id,))); //TODO retrieve name and location
           },
           tooltip: 'Get Person Detail',

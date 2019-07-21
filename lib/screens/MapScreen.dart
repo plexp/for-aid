@@ -44,10 +44,8 @@ class _MapScreenState extends State<MapScreen> {
     _initCurrentLocation();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> _initLastKnownLocation() async {
     Position position;
-    // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       final Geolocator geolocator = Geolocator()
         ..forceAndroidLocationManager = !widget.androidFusedLocation;
@@ -57,9 +55,6 @@ class _MapScreenState extends State<MapScreen> {
       position = null;
     }
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) {
       return;
     }
@@ -69,7 +64,6 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
   _initCurrentLocation() {
     Geolocator()
       ..forceAndroidLocationManager = !widget.androidFusedLocation
@@ -77,7 +71,6 @@ class _MapScreenState extends State<MapScreen> {
         desiredAccuracy: LocationAccuracy.best,
       ).then((position) {
         if (mounted) {
-
           setState(() => _currentPosition = position);
         }
       }).catchError((e) {
@@ -86,6 +79,7 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   final Map<String, Marker> _markers = {};
+
   Future<void> _onMapCreated(GoogleMapController controller) async {
     List<AddScan> people = await AddScan().getPeople();
     setState(() {
