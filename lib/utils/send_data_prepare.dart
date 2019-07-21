@@ -78,6 +78,14 @@ class AddScan {
 
 
   }
+  
+  Future<List<AddScan>> getPeople() async {
+    List people = [];
+    //TODO get list of people from external source
+    people.add(new AddScan(id: 1, first_name: "John", last_name: "Doe", latitude: 40.4468825758702, longitude: -3.694507890552619));
+    people.add(new AddScan(id: 2, first_name: "Jack", last_name: "Black", latitude: 40.4525758702, longitude: -3.694890552619));
+    return people;
+  }
 
   
 }
