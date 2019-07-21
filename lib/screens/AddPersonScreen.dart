@@ -88,8 +88,8 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
             int id = int.parse(idInputController.text);
             String firstName = firstNameInputController.text;
             String lastName = lastNameInputController.text;
-            double latitude = _currentPosition.latitude;
-            double longitude = _currentPosition.longitude;
+            double latitude = this.latitude;
+            double longitude = this.longitude;
             AddScan send = new AddScan(id: id, first_name: firstName, last_name: lastName, latitude: latitude, longitude: longitude);
             send.sendRequest();
             idInputController.text = "";
