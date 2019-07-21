@@ -1,6 +1,7 @@
 // main.dart
 
 import 'package:flutter/material.dart';
+import 'package:probable_pancake/screens/PersonDetailScreen.dart';
 
 import 'screens/HomeScreen.dart';
 import 'screens/DebugScreen.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
           '/' : (BuildContext context) => HomeScreen(),
 
           '/people/add' : (BuildContext context) => AddPersonScreen(),
+          '/people/detail' : (BuildContext context) => PersonDetailScreen(),
 
           '/debug' : (BuildContext context) => DebugScreen(),
         },
