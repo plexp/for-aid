@@ -7,11 +7,21 @@ import 'package:probable_pancake/utils/components.dart';
 
 import 'package:barcode_scan/barcode_scan.dart';
 
+import 'package:probable_pancake/utils/send_data_prepare.dart';
+
 class AddPersonScreen extends StatefulWidget {
   AddPersonScreen({Key key}) : super(key: key);
   _AddPersonScreenState createState() => _AddPersonScreenState();
 }
 class _AddPersonScreenState extends State<AddPersonScreen> {
+  final idInputController = TextEditingController();
+
+  @override
+  void dispose() {
+    idInputController.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -24,6 +34,13 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
           title: Text('AddPerson Screen'),
         ),
         drawer: cmp.getDrawer(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            //TODO send data
+          },
+          tooltip: 'Add this person',
+          child: Icon(Icons.text_fields),
+        ),
         body: ListView(
           padding: const EdgeInsets.all(8.0),
           children: <Widget>[
@@ -31,7 +48,7 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
                 height: 80,
                 child: Center(
                     child: Container(
-                        child: Text("NFC Test")
+                        child: Text("Add Person")
                     )
                 )
             ),
@@ -39,9 +56,24 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
               future: this.getData(),
               builder: (context, snapshot) {
                   if (snapshot.hasError) print(snapshot.error);
-
+                  if(snapshot.hasData) {idInputController.text = snapshot.data;}
                   return snapshot.hasData
-                      ? Text(snapshot.data)
+                      ? Container(
+                        child: Column(children: <Widget>[
+                          Center(
+                            //ID input disabled
+                            child: TextField(
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'Enter a ID'
+                                  ),
+                                  controller: idInputController,
+                                  readOnly: true,
+                                  
+                                )
+                          ),
+                        ],)
+                      )
                       : Center(child: CircularProgressIndicator());
                 },
 
