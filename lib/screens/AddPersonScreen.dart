@@ -17,6 +17,7 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
   final idInputController = TextEditingController();
   final firstNameInputController = TextEditingController();
   final lastNameInputController = TextEditingController();
+  String barcode;
 
   @override
   void dispose() {
@@ -63,23 +64,25 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
                     )
                 )
             ),
-            FutureBuilder(
-              future: this.getData(),
-              builder: (context, snapshot) {
-                  if (snapshot.hasError) print(snapshot.error);
-                  if(snapshot.hasData) {idInputController.text = snapshot.data;}
-                  return snapshot.hasData
-                      ? Container(
+            Container(
                         child: Column(children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                            child: RaisedButton(
+                                color: Colors.blue,
+                                textColor: Colors.white,
+                                splashColor: Colors.blueGrey,
+                                onPressed: getData,
+                                child: const Text('Add ID from QR')
+                            ),
+                          ),
                           Center(
-                            //ID input disabled
                             child: TextField(
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'Enter a ID'
                                   ),
                                   controller: idInputController,
-                                  readOnly: true,
                                 )
                           ),
                           Center(
@@ -101,30 +104,28 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
                             )
                           )
                         ],)
-                      )
-                      : Center(child: CircularProgressIndicator());
-                },
-
-            ),
+                      ),
           ],
         ),
     );
   }
 
-  Future<String> getData() async {
-    try {
+  void getData() async {
+     try {
       String barcode = await BarcodeScanner.scan();
-      return barcode;
+      setState(() => idInputController.text = this.barcode = barcode);
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
-          return 'The user did not grant the camera permission!';
+        setState(() {
+          idInputController.text = this.barcode = 'The user did not grant the camera permission!';
+        });
       } else {
-        return 'Unknown error: $e';
+        setState(() => idInputController.text = this.barcode = 'Unknown error: $e');
       }
     } on FormatException{
-      return 'null (User returned using the "back"-button before scanning anything. Result)';
+      setState(() => idInputController.text = this.barcode = 'null (User returned using the "back"-button before scanning anything. Result)');
     } catch (e) {
-      return 'Unknown error: $e';
+      setState(() => idInputController.text = this.barcode = 'Unknown error: $e');
     }
   }
 }

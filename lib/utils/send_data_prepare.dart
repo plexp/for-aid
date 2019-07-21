@@ -40,7 +40,7 @@ class AddScan {
     String targetUrl = "?"; //TODO add url
     String json;
 
-    if(this.id == null || this.id == "") {
+    if(this.id == null) {
       throw new Exception("Chybí ID");
     }
     if(this.longitude == null || this.latitude == null) {
