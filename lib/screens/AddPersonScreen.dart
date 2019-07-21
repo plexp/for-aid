@@ -19,8 +19,8 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
   final idInputController = TextEditingController();
   final firstNameInputController = TextEditingController();
   final lastNameInputController = TextEditingController();
-  double latitude;
-  double longitude;
+  double latitude = 0.0;
+  double longitude = 0.0;
   Position _lastKnownPosition;
   Position _currentPosition;
 
