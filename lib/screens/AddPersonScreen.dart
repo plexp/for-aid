@@ -15,10 +15,14 @@ class AddPersonScreen extends StatefulWidget {
 }
 class _AddPersonScreenState extends State<AddPersonScreen> {
   final idInputController = TextEditingController();
+  final firstNameInputController = TextEditingController();
+  final lastNameInputController = TextEditingController();
 
   @override
   void dispose() {
     idInputController.dispose();
+    firstNameInputController.dispose();
+    lastNameInputController.dispose();
     super.dispose();
   }
 
@@ -37,6 +41,13 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             //TODO send data
+            int id = int.parse(idInputController.text);
+            String firstName = firstNameInputController.text;
+            String lastName = lastNameInputController.text;
+            double latitude = 0.0;
+            double longitude = 0.0;
+            AddScan send = new AddScan(id: id, first_name: firstName, last_name: lastName, latitude: latitude, longitude: longitude);
+            send.sendRequest();
           },
           tooltip: 'Add this person',
           child: Icon(Icons.text_fields),
@@ -69,9 +80,26 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
                                   ),
                                   controller: idInputController,
                                   readOnly: true,
-                                  
                                 )
                           ),
+                          Center(
+                            child: TextField(
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'Enter first name'
+                                ),
+                                  controller: firstNameInputController,
+                            )
+                          ),
+                          Center(
+                            child: TextField(
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'Enter last name'
+                                ),
+                                  controller: lastNameInputController,
+                            )
+                          )
                         ],)
                       )
                       : Center(child: CircularProgressIndicator());
