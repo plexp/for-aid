@@ -19,6 +19,8 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
   final idInputController = TextEditingController();
   final firstNameInputController = TextEditingController();
   final lastNameInputController = TextEditingController();
+  double latitude;
+  double longitude;
   Position _lastKnownPosition;
   Position _currentPosition;
 
@@ -164,7 +166,7 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
   void getData() async {
      try {
       String barcode = await BarcodeScanner.scan();
-      setState(() => idInputController.text = this.barcode = barcode);
+      setState(() {idInputController.text = this.barcode = barcode; this.latitude = _currentPosition.latitude; this.longitude = _currentPosition.longitude;});
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
         setState(() {
